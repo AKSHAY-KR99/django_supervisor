@@ -1,0 +1,107 @@
+Supervisor steps
+
+Create a sample python script
+
+Setup the logger files and others
+
+Install supervisor
+
+$ sudo apt-get install supervisor
+
+$ sudo supervisord (check the installation is correct or not)
+
+# Checking the status of supervisor
+$ sudo service supervisor status
+
+# Staring supervisor
+$ sudo service supervisor start
+
+# Stopping and restarting supervisor
+$ sudo service supervisor stop
+
+$ sudo service supervisor restart
+
+
+
+
+
+
+Setup the config file
+Creating a configuration file with any name (here “test_process”)
+
+$ sudo nano /etc/supervisor/conf.d/test_process.conf
+(text the given content in terminal)
+[program:test_process]
+
+Command = /home/akshay/Desktop/django_supervisor/spr/bin/python3    /home/akshay/Desktop/django_supervisor/simple_code.py
+(** here command is  (python environment path) (python script path.))
+
+stderr_logfile=/var/log/long.err.log
+
+stdout_logfile=/var/log/long.out.log
+
+autostart=true
+
+autorestart=true
+
+
+
+
+
+
+Get into the supervisor console.
+        $ sudo supervisorctl
+
+            [reread - command]
+supervisor> reread
+count_task: available
+test_process: available
+
+[add] - run the task continousily.
+supervisor> add test_process
+test_process: added process group
+
+[stop]
+supervisor> stop test_process
+test_process: stopped
+[remove]
+supervisor> remove test_process
+test_process: removed process group
+
+    Then it will run continuously without stopping. When an error raises automatically, restart the server. The log details write in the log files that we are configured.
+
+
+
+
+Checking it works in the supervisor console.
+
+$ tail -f /var/log/long.err.log (std_err file given in supervisor config)
+2022-04-08 16:28:11,237 INFO root Generated 4. Sleeping
+2022-04-08 16:28:12,239 INFO root Generated 2. Sleeping
+2022-04-08 16:28:13,241 INFO root Generated 7. Sleeping
+2022-04-08 16:28:14,243 INFO root Generated 1. Sleeping
+2022-04-08 16:28:15,245 INFO root Generated 7. Sleeping
+2022-04-08 16:28:16,246 INFO root Generated 5. Sleeping
+2022-04-08 16:28:17,248 ERROR root Generated 10. Application Crashing
+Traceback (most recent call last):
+  File "/home/akshay/Desktop/django_supervisor/simple_code.py", line 30, in <module>
+    main()
+  File "/home/akshay/Desktop/django_supervisor/simple_code.py", line 23, in main
+    raise Exception('Application Crashing')
+Exception: Application Crashing
+2022-04-08 16:28:18,362 INFO root Generated 1. Sleeping
+
+It gives all outputs including INFO and ERROR
+
+
+
+$ tail -f /var/log/long.out.log  (std_out file given in supervisor config)
+            Starting the simple test application
+Starting the simple test application
+Starting the simple test application
+Starting the simple test application
+Starting the simple test application
+Starting the simple test application
+Starting the simple test application
+
+            It gives an output when the application is restarted(crash application by an error and restart.)

@@ -1,0 +1,26 @@
+Supervisor - 
+	* http://supervisord.org/introduction.html
+	* Client/server system that allows its users to control a number of processes on UNIX-like operating systems. 
+	
+Supervisor Components - 
+	1, supervisord - The server piece of supervisor
+	2, supervisorctl - The command-line client piece of the supervisor 
+	3, Web Server - A (sparse) web user interface with functionality comparable to supervisorctl may be accessed via a browser if you 				start supervisord against an internet socket. 
+	4, XML-RPC Interface - interrogate and control supervisor and the programs it runs
+
+Platform Requirements - 
+	*  Linux (Ubuntu 18.04), Mac OS X (10.4/10.5/10.6), and Solaris (10 for Intel) and FreeBSD 6.1
+	*  Supervisor will not run at all under any version of Windows.
+	*  Python 3 version 3.4 or later and on Python 2 version 2.7
+
+Steps :
+ 
+ 1 , sudo service supervisor status - to know status
+ 2 , echo_supervisord_conf
+ 3 , sudo nano /etc/supervisor/conf.d/test_process.conf
+ 4 , sudo supervisorctl
+ 5 , reread
+ 6 , add test_process
+ 7 , status
+ 8 , remove test_process
+ 9 , stop test_process
